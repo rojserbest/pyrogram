@@ -31,7 +31,8 @@ class SetChatPhoto(Scaffold):
         chat_id: Union[int, str],
         *,
         photo: Union[str, BinaryIO] = None,
-        video: Union[str, BinaryIO] = None
+        video: Union[str, BinaryIO] = None,
+	video_start_ts: int = 0
     ) -> bool:
         """Set a new chat photo or video (H.264/MPEG-4 AVC video, max 5 seconds).
 
@@ -90,7 +91,8 @@ class SetChatPhoto(Scaffold):
         else:
             photo = raw.types.InputChatUploadedPhoto(
                 file=await self.save_file(photo),
-                video=await self.save_file(video)
+                video=await self.save_file(video),
+		video_start_ts=video_start_ts,
             )
 
         if isinstance(peer, raw.types.InputPeerChat):
